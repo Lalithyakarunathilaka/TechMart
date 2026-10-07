@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
@@ -29,11 +29,14 @@ function ProtectedRoute({ adminOnly = false }) {
 }
 
 function CustomerLayout() {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Navbar />
       <CartDrawer />
-      <main className="flex-1">
+      <main className={`flex-1 ${isHome ? '' : 'pt-16'}`}>
         <Outlet />
       </main>
       <Footer />
