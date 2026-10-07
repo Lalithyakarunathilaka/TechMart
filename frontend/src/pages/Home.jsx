@@ -21,24 +21,34 @@ export default function Home() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-          <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              The Latest Tech<br />At Your Fingertips
-            </h1>
-            <p className="text-lg md:text-xl text-primary-100 mb-8">
-              Discover premium electronics, gadgets, and accessories from top brands. Free shipping on orders over Rs. 10,000.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/products" className="inline-flex items-center justify-center space-x-2 bg-white text-primary-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
-                <span>Shop Now</span>
-                <ArrowRight size={20} />
-              </Link>
-              <Link to="/products?category=smartphones" className="inline-flex items-center justify-center space-x-2 border-2 border-white/30 text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition">
-                <span>View Smartphones</span>
-              </Link>
-            </div>
+      <section className="relative bg-black text-white min-h-[90vh] flex flex-col items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=1920&h=1080&fit=crop"
+            alt=""
+            className="w-full h-full object-cover opacity-40"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/30" />
+        </div>
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+          <p className="text-sm md:text-base tracking-[0.3em] uppercase text-gray-400 mb-4 font-medium">Electronics & Tech Gadgets</p>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight">
+            TechMart
+          </h1>
+          <p className="text-lg md:text-2xl text-gray-300 mb-2 font-light">
+            The Latest Tech. At Your Fingertips.
+          </p>
+          <p className="text-sm md:text-base text-gray-500 mb-10">
+            Premium gadgets &bull; Free shipping over Rs. 10,000
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/products" className="inline-flex items-center justify-center space-x-2 bg-white text-black px-8 py-3.5 rounded-full font-semibold hover:bg-gray-200 transition text-sm md:text-base">
+              <span>Shop Now</span>
+              <ArrowRight size={18} />
+            </Link>
+            <Link to="/products?category=smartphones" className="inline-flex items-center justify-center space-x-2 border border-white/30 text-white px-8 py-3.5 rounded-full font-semibold hover:bg-white/10 transition text-sm md:text-base">
+              <span>Explore Smartphones</span>
+            </Link>
           </div>
         </div>
       </section>
@@ -54,13 +64,19 @@ export default function Home() {
             <Link
               key={cat.id}
               to={`/products?category=${cat.slug}`}
-              className="bg-white border border-gray-100 rounded-xl p-6 text-center hover:shadow-md hover:border-primary-200 transition group"
+              className="group relative overflow-hidden rounded-2xl aspect-[3/4] block bg-gray-800"
             >
-              <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-primary-100 transition">
-                <span className="text-primary-600 text-xl font-bold">{cat.name[0]}</span>
+              <img
+                src={cat.image || `https://placehold.co/400x500/1a1a2e/eee?text=${encodeURIComponent(cat.name)}`}
+                alt={cat.name}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                onError={(e) => { e.target.src = `https://placehold.co/400x500/1a1a2e/eee?text=${encodeURIComponent(cat.name)}`; }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-4">
+                <h3 className="font-bold text-white text-sm md:text-base">{cat.name}</h3>
+                <p className="text-xs text-gray-300 mt-0.5">{cat.products_count} products</p>
               </div>
-              <h3 className="font-semibold text-gray-900 text-sm">{cat.name}</h3>
-              <p className="text-xs text-gray-400 mt-1">{cat.products_count} products</p>
             </Link>
           ))}
         </div>
