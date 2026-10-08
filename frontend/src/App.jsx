@@ -64,7 +64,27 @@ export default function App() {
     <BrowserRouter>
       <AuthProvider>
         <CartProvider>
-          <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              duration: 3000,
+              style: {
+                padding: '14px 24px',
+                borderRadius: '12px',
+                fontSize: '14px',
+                fontWeight: '500',
+                boxShadow: '0 10px 40px rgba(0,0,0,0.15)',
+              },
+              error: {
+                style: { background: '#fee2e2', color: '#991b1b', border: '1px solid #fca5a5' },
+                iconTheme: { primary: '#dc2626', secondary: '#fee2e2' },
+              },
+              success: {
+                style: { background: '#dcfce7', color: '#166534', border: '1px solid #86efac' },
+                iconTheme: { primary: '#16a34a', secondary: '#dcfce7' },
+              },
+            }}
+          />
           <Routes>
             <Route element={<CustomerLayout />}>
               <Route path="/" element={<Home />} />

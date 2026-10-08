@@ -36,7 +36,7 @@ export default function Footer() {
             <div className="space-y-2 text-sm">
               <p>123 Tech Street, Colombo</p>
               <p>info@techmart.lk</p>
-              <p>+94 77 123 4567</p>
+              <p>+94 78 859 7274</p>
             </div>
           </div>
         </div>
