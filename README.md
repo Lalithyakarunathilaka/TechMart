@@ -21,36 +21,42 @@ A full-stack e-commerce application for an electronics and tech gadgets store, b
 
 ```
 TechMart/
-├── backend/              
+├── backend/                # Laravel 11 REST API
 │   ├── app/
 │   │   ├── Http/
 │   │   │   ├── Controllers/
-│   │   │   │   ├── AuthController.php        
-│   │   │   │   ├── ProductController.php    
-│   │   │   │   ├── CategoryController.php    
-│   │   │   │   ├── CheckoutController.php    
+│   │   │   │   ├── AuthController.php        # Register, Login, Logout
+│   │   │   │   ├── ProductController.php     # Public product browsing
+│   │   │   │   ├── CategoryController.php    # Public categories
+│   │   │   │   ├── CheckoutController.php    # Order creation, PayHere, customer orders
 │   │   │   │   └── Admin/
 │   │   │   │       ├── DashboardController.php
 │   │   │   │       ├── AdminProductController.php
 │   │   │   │       ├── AdminCategoryController.php
 │   │   │   │       └── AdminOrderController.php
 │   │   │   └── Middleware/
-│   │   │       └── AdminMiddleware.php       
-│   │   └── Models/                           
+│   │   │       └── AdminMiddleware.php       # Role-based access control
+│   │   └── Models/                           # Eloquent models with relationships
 │   ├── database/
-│   │   ├── migrations/                       
-│   │   └── seeders/                          
-│   └── routes/api.php                        
+│   │   ├── migrations/                       # Schema definitions
+│   │   └── seeders/                          # Demo data (admin user, products, categories)
+│   └── routes/api.php                        # RESTful API routes
 │
-└── frontend/               
+└── frontend/               # React SPA
     └── src/
-        ├── components/     
-        ├── pages/          
-        ├── context/        
-        └── services/      
+        ├── components/     # Reusable UI (Navbar, Footer, ProductCard, CartDrawer, AdminSidebar)
+        ├── pages/          # Route pages (Home, Products, ProductDetail, Checkout, Login, admin/*)
+        ├── context/        # AuthContext (user state), CartContext (cart state + localStorage)
+        └── services/       # Axios API client with interceptors
 ```
 
 ## Database Design
+
+### Entity Relationship
+
+```
+users (1) ──→ (N) orders (1) ──→ (N) order_items (N) ←── (1) products (N) ←── (1) categories
+```
 
 ### Tables
 
@@ -61,6 +67,12 @@ TechMart/
 | **products** | id, category_id, name, slug, price, sale_price, stock, images (JSON), specifications (JSON), featured, status | Product catalog with variants |
 | **orders** | id, user_id (nullable), order_number, customer_*, shipping_address, total, status, payment_method, payment_status | Order management (supports guest checkout) |
 | **order_items** | id, order_id, product_id, product_name, price, quantity | Line items preserving price at time of purchase |
+
+### Design Decisions
+- **JSON columns** for images and specifications allow flexible product attributes without additional tables
+- **Nullable user_id** on orders enables guest checkout while still tracking logged-in users
+- **product_name and price stored on order_items** — preserves order history even if product is later modified/deleted
+- **order_number** (e.g., TM-20261006-A3F2B1) provides a human-readable reference
 
 ## Setup Process
 
